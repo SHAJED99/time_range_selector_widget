@@ -6,3 +6,7 @@ Easily select time range with dragging the bar. Easy to implement and fully cust
 ## 0.0.2
 
 Bug fixes
+
+
+## 0.0.3
+Documentation is updated

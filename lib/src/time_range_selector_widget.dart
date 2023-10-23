@@ -62,7 +62,8 @@ class TimeRangeSelectorWidget extends StatefulWidget {
   final int minTime = 1;
 
   @override
-  State<TimeRangeSelectorWidget> createState() => _TimeRangeSelectorWidgetState();
+  State<TimeRangeSelectorWidget> createState() =>
+      _TimeRangeSelectorWidgetState();
 }
 
 class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
@@ -74,8 +75,10 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     super.initState();
     currentTime = widget.initialTime;
     totalTime = widget.maxTime - widget.minTime + 2;
-    if (widget.maxTime <= widget.minTime) throw Exception("Max Time must be greater than min time");
-    if (currentTime < widget.minTime || currentTime > widget.maxTime) throw Exception("Current time must be in time range (Max and min time)");
+    if (widget.maxTime <= widget.minTime)
+      throw Exception("Max Time must be greater than min time");
+    if (currentTime < widget.minTime || currentTime > widget.maxTime)
+      throw Exception("Current time must be in time range (Max and min time)");
   }
 
   /// Builds the circular box that contains the clock selector.
@@ -86,20 +89,23 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
       margin: child == null ? null : EdgeInsets.all(widget.stockWidth),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: child == null ? null : LinearGradient(colors: widget.colorGradient),
+        gradient:
+            child == null ? null : LinearGradient(colors: widget.colorGradient),
         color: child == null ? null : Theme.of(context).canvasColor,
         boxShadow: [
           BoxShadow(
             color: widget.shadowColorLight,
             blurRadius: widget.padding / 2,
             offset: Offset(-widget.padding / 2, -widget.padding / 2),
-            inset: child == null, // This line should be comment if you don't want to use "flutter_inset_box_shadow" package
+            inset: child ==
+                null, // This line should be comment if you don't want to use "flutter_inset_box_shadow" package
           ),
           BoxShadow(
             color: widget.shadowColorDark,
             blurRadius: widget.padding / 2,
             offset: Offset(widget.padding / 2, widget.padding / 2),
-            inset: child == null, // This line should be comment if you don't want to use "flutter_inset_box_shadow" package
+            inset: child ==
+                null, // This line should be comment if you don't want to use "flutter_inset_box_shadow" package
           ),
         ],
       ),
@@ -172,7 +178,9 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
               context: context,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: widget.childBuilder == null ? const SizedBox() : widget.childBuilder!(currentTime),
+                child: widget.childBuilder == null
+                    ? const SizedBox()
+                    : widget.childBuilder!(currentTime),
               ),
             ),
 
@@ -180,7 +188,8 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
             Positioned.fill(
               child: GestureDetector(
                 onPanUpdate: (details) {
-                  double angle = angleCounter(Size(box.maxWidth, box.maxHeight), details);
+                  double angle =
+                      angleCounter(Size(box.maxWidth, box.maxHeight), details);
                   changeTime(angle);
                 },
                 child: Container(
@@ -231,7 +240,8 @@ class _CustomClockPickerPaint extends CustomPainter {
     final centerX = size.width / 2;
     final centerY = size.height / 2;
     final center = Offset(centerX, centerY);
-    final radius = min((size.height / 2) - (stokeWidth / 2), (size.width / 2) - (stokeWidth / 2));
+    final radius = min((size.height / 2) - (stokeWidth / 2),
+        (size.width / 2) - (stokeWidth / 2));
 
     //! -------------------------------------------------------------------------------------------- Line
     var arcPaint = Paint()
@@ -247,8 +257,10 @@ class _CustomClockPickerPaint extends CustomPainter {
     //! -------------------------------------------------------------------------------------------- Small Dot
     final smallDotColor = Paint()..color = Colors.black;
     for (var i = 0; i < totalTime; i++) {
-      final smallDotX = centerX + radius * cos((270 + (360 * i / totalTime)) * pi / 180);
-      final smallDotY = centerY + radius * sin((270 + (360 * i / totalTime)) * pi / 180);
+      final smallDotX =
+          centerX + radius * cos((270 + (360 * i / totalTime)) * pi / 180);
+      final smallDotY =
+          centerY + radius * sin((270 + (360 * i / totalTime)) * pi / 180);
       final offset = Offset(smallDotX, smallDotY);
 
       if (dotBuilder != null) {
@@ -260,9 +272,12 @@ class _CustomClockPickerPaint extends CustomPainter {
 
     //! -------------------------------------------------------------------------------------------- Big Dot
     final fillPaint = Paint()..color = Colors.white;
-    final dotX = centerX + radius * cos((270 + (360 * time / totalTime)) * pi / 180);
-    final dotY = centerY + radius * sin((270 + (360 * time / totalTime)) * pi / 180);
-    canvas.drawCircle(Offset(dotX, dotY), (stokeWidth / 2) - padding, fillPaint);
+    final dotX =
+        centerX + radius * cos((270 + (360 * time / totalTime)) * pi / 180);
+    final dotY =
+        centerY + radius * sin((270 + (360 * time / totalTime)) * pi / 180);
+    canvas.drawCircle(
+        Offset(dotX, dotY), (stokeWidth / 2) - padding, fillPaint);
   }
 
   @override
