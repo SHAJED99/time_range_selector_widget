@@ -23,20 +23,43 @@ class TimeRangeSelectorWidget extends StatefulWidget {
     this.dotBuilder,
   });
 
+  /// The initial time value of the selector.
   final int initialTime;
-  final int minTime = 1;
+
+  /// The maximum selectable time value.
   final int maxTime;
+
+  /// The width of the circular line.
   final double stockWidth;
+
+  /// Padding and shadow size
   final double padding;
 
+  /// Circular line color
   final Color stockColor;
+
+  /// Colors gradient for the circular canvas.
   final List<Color> colorGradient;
+
+  /// Shadow color for light area.
   final Color shadowColorLight;
+
+  /// Shadow color for dark area.
   final Color shadowColorDark;
+
+  /// Background colors.
   final List<Color> backgroundColor;
+
+  /// A callback function called when the selected time changes.
   final Function(int currentTime)? onChangeValue;
+
+  /// A builder function to provide custom child widgets based on the selected time.
   final Widget Function(int currentTime)? childBuilder;
+
+  /// A builder function to provide custom dots at specific positions.
   final Function(int itemIndex, Offset offset, Canvas canvas)? dotBuilder;
+
+  final int minTime = 1;
 
   @override
   State<TimeRangeSelectorWidget> createState() => _TimeRangeSelectorWidgetState();
@@ -55,6 +78,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     if (currentTime < widget.minTime || currentTime > widget.maxTime) throw Exception("Current time must be in time range (Max and min time)");
   }
 
+  /// Builds the circular box that contains the clock selector.
   Widget drawBox({required BuildContext context, Widget? child}) {
     return Container(
       alignment: Alignment.center,
@@ -83,6 +107,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     );
   }
 
+  /// Handles the time change when dragging.
   changeTime(double angle) async {
     int i = ((angle / 360) * totalTime).round();
     if (i > widget.maxTime) i = 0;
@@ -92,6 +117,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     }
   }
 
+  /// Calculates the angle of a point relative to the center of the clock selector.
   double angleCounter(Size size, DragUpdateDetails details) {
     final centerX = size.width / 2;
     final centerY = size.height / 2;
@@ -113,7 +139,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
           clipBehavior: Clip.antiAlias,
           alignment: Alignment.center,
           children: [
-            //! -------------------------------------------------------------------------------------- Background
+            /// -------------------------------------------------------------------------------------- Background
             Positioned.fill(
               child: Container(
                 clipBehavior: Clip.antiAlias,
@@ -124,10 +150,10 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
               ),
             ),
 
-            //! -------------------------------------------------------------------------------------- Line
+            /// -------------------------------------------------------------------------------------- Line
             Positioned.fill(
               child: CustomPaint(
-                painter: CustomClockPickerPaint(
+                painter: _CustomClockPickerPaint(
                   time: currentTime,
                   totalTime: totalTime,
                   stokeWidth: widget.stockWidth,
@@ -138,10 +164,10 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
               ),
             ),
 
-            //! -------------------------------------------------------------------------------------- Back Canvas
+            /// -------------------------------------------------------------------------------------- Back Canvas
             Positioned.fill(child: drawBox(context: context)),
 
-            //! -------------------------------------------------------------------------------------- Front Canvas
+            /// -------------------------------------------------------------------------------------- Front Canvas
             drawBox(
               context: context,
               child: AspectRatio(
@@ -150,7 +176,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
               ),
             ),
 
-            //! -------------------------------------------------------------------------------------- Draggable
+            /// -------------------------------------------------------------------------------------- Draggable
             Positioned.fill(
               child: GestureDetector(
                 onPanUpdate: (details) {
@@ -183,7 +209,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
   }
 }
 
-class CustomClockPickerPaint extends CustomPainter {
+class _CustomClockPickerPaint extends CustomPainter {
   final int time;
   final int totalTime;
   final double stokeWidth;
@@ -191,8 +217,7 @@ class CustomClockPickerPaint extends CustomPainter {
   final Color stockColor;
   final Function(int itemIndex, Offset offset, Canvas canvas)? dotBuilder;
 
-  CustomClockPickerPaint({
-    super.repaint,
+  _CustomClockPickerPaint({
     required this.time,
     required this.totalTime,
     required this.stokeWidth,

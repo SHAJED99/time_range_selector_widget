@@ -41,8 +41,14 @@ class MyApp extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(currentTime.toString(), style: const TextStyle(fontSize: 70, fontWeight: FontWeight.bold, height: 1)),
-                      Text(currentTime > 1 ? "Hours" : "Hour", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
+                      Text(currentTime.toString(),
+                          style: const TextStyle(
+                              fontSize: 70,
+                              fontWeight: FontWeight.bold,
+                              height: 1)),
+                      Text(currentTime > 1 ? "Hours" : "Hour",
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.normal)),
                     ],
                   ),
                 );
