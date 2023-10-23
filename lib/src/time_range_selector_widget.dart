@@ -75,10 +75,12 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     super.initState();
     currentTime = widget.initialTime;
     totalTime = widget.maxTime - widget.minTime + 2;
-    if (widget.maxTime <= widget.minTime)
+    if (widget.maxTime <= widget.minTime) {
       throw Exception("Max Time must be greater than min time");
-    if (currentTime < widget.minTime || currentTime > widget.maxTime)
+    }
+    if (currentTime < widget.minTime || currentTime > widget.maxTime) {
       throw Exception("Current time must be in time range (Max and min time)");
+    }
   }
 
   /// Builds the circular box that contains the clock selector.
