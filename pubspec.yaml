@@ -1,0 +1,45 @@
+name: time_range_selector_widget
+# description: This is a time range selector package.
+
+description: |
+  A versatile Flutter widget that empowers your app with an interactive and customizable time range selector. Easily integrate a time range picker into your app for tasks such as scheduling, event planning, or date-based filtering. With extensive configuration options, this widget provides a user-friendly way to select time intervals, complete with a beautiful visual display.
+
+  Key Features:
+  - Intuitive drag-and-select interface.
+  - Customizable appearance and styling to match your app's design.
+  - Suitable for use cases like calendar apps, scheduling, and more.
+  - Supports setting minimum and maximum selectable time ranges.
+  - Seamless integration with your existing Flutter projects.
+  - Ideal for projects where precise time range selection is crucial.
+
+  Enhance your app's time-based functionalities with the Time Range Selector Widget!
+
+version: 0.0.1
+homepage: https://github.com/SHAJED99/flutter_utils
+repository: https://github.com/SHAJED99/flutter_utils/tree/main/package/time_range_selector_widget
+license: BSD 3-Clause
+
+screenshots:
+  - description: 'Example of time_range_selector_widget'
+    path: screenshots/1.gif
+
+
+topics:
+  - time-range
+  - time
+  - time-selector
+
+
+environment:
+  sdk: '>=3.1.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_inset_box_shadow: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
