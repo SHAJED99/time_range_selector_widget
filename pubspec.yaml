@@ -4,7 +4,7 @@ name: time_range_selector_widget
 description: |
   Quickly select the hourly time range by dragging the circular bar.
 
-version: 1.0.1
+version: 1.0.2
 repository: https://github.com/SHAJED99/time_range_selector_widget
 license: BSD 3-Clause
 
