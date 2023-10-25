@@ -43,11 +43,9 @@ TimeRangeSelectorWidget(
 
 # Example
 <img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/1.gif" alt="Example of time_range_selector_widget" />
-<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/4.gif" alt="Example of time_range_selector_widget" />
-<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/5.gif" alt="Example of time_range_selector_widget" />
 
 
-### Handler Builder
+## Handler Builder
 ```dart
 handleBuilder: (itemIndex, offset) {
     return Container(
@@ -62,25 +60,22 @@ handleBuilder: (itemIndex, offset) {
     );
 },
 ```
-\n
-\n
+### Example - Handler Builder
 <img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/2.gif" alt="Example - Handler Builder" />
-\nExample - Handler Builder
 
 
-### Index Builder
+
+## Index Builder
 ```dart
 positionalDotBuilder: (itemIndex, offset) {
     return FittedBox(child: Text((itemIndex + minTime).toString()));
 },
 ```
-\n
-\n
 <img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/3.gif" alt="Example - Index Builder" />
-\nExample - Index Builder
+### Example - Index Builder
 
 
-### Child Builder for hour
+## Child Builder for hour
 ```dart
 childBuilder: (currentTime) {
     return Container(
@@ -104,13 +99,11 @@ childBuilder: (currentTime) {
     );
 },
 ```
-\n
-\n
 <img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/4.gif" alt="Example - Child Builder for hour" />
-\nExample - Child Builder for hour
+### Example - Child Builder for hour
 
 
-### Child Builder for minute
+## Child Builder for minute
 ```dart
 childBuilder: (currentTime) {
     return Container(
@@ -134,11 +127,9 @@ childBuilder: (currentTime) {
     );
 },
 ```
-\n
-\n
 <img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/6.gif" alt="Example - Child Builder for minute" />
-\nExample - Child Builder for minute
+### Example - Child Builder for minute
 
 
-### Easily customizable
+## Easily customizable
 <img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/5.gif" alt="Example - Child Builder for minute" />
