@@ -10,3 +10,7 @@ Bug fixes
 
 ## 0.0.3
 Documentation is updated
+
+## 1.0.0
+1. Optimized version.
+2. Functionality added.

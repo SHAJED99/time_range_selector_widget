@@ -43,6 +43,8 @@ TimeRangeSelectorWidget(
 
 # Example
 <img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/1.gif" alt="Example of time_range_selector_widget" />
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/4.gif" alt="Example of time_range_selector_widget" />
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/5.gif" alt="Example of time_range_selector_widget" />
 
 
 ### Handler Builder
@@ -60,5 +62,83 @@ handleBuilder: (itemIndex, offset) {
     );
 },
 ```
-Example - Handler Builder
-<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/1.gif" alt="Example - Handler Builder" />
+\n
+\n
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/2.gif" alt="Example - Handler Builder" />
+\nExample - Handler Builder
+
+
+### Index Builder
+```dart
+positionalDotBuilder: (itemIndex, offset) {
+    return FittedBox(child: Text((itemIndex + minTime).toString()));
+},
+```
+\n
+\n
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/3.gif" alt="Example - Index Builder" />
+\nExample - Index Builder
+
+
+### Child Builder for hour
+```dart
+childBuilder: (currentTime) {
+    return Container(
+    decoration: BoxDecoration(
+        gradient: LinearGradient(
+        colors: [
+            Colors.black.withOpacity(0.05),
+            Colors.black.withOpacity(0.1)
+        ],
+        ),
+    ),
+    child: Center(
+        child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+            Text(currentTime.toString(), style: const TextStyle(fontSize: 70, fontWeight: FontWeight.bold, height: 1)),
+            Text(currentTime > 1 ? "Hours" : "Hour", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
+        ],
+        ),
+    ),
+    );
+},
+```
+\n
+\n
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/4.gif" alt="Example - Child Builder for hour" />
+\nExample - Child Builder for hour
+
+
+### Child Builder for minute
+```dart
+childBuilder: (currentTime) {
+    return Container(
+    decoration: BoxDecoration(
+        gradient: LinearGradient(
+        colors: [
+            Colors.black.withOpacity(0.05),
+            Colors.black.withOpacity(0.1)
+        ],
+        ),
+    ),
+    child: Center(
+        child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+            Text((currentTime * 5).toString(), style: const TextStyle(fontSize: 70, fontWeight: FontWeight.bold, height: 1)),
+            Text(currentTime > 0 ? "Minutes" : "Minute", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
+        ],
+        ),
+    ),
+    );
+},
+```
+\n
+\n
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/6.gif" alt="Example - Child Builder for minute" />
+\nExample - Child Builder for minute
+
+
+### Easily customizable
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/6.gif" alt="Example - Child Builder for minute" />
