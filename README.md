@@ -141,4 +141,4 @@ childBuilder: (currentTime) {
 
 
 ### Easily customizable
-<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/6.gif" alt="Example - Child Builder for minute" />
+<img src="https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/5.gif" alt="Example - Child Builder for minute" />
