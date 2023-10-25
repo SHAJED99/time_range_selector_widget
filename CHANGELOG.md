@@ -14,3 +14,9 @@ Documentation is updated
 ## 1.0.0
 1. Optimized version.
 2. Functionality added.
+
+## 1.0.1
+Documentation updated
+
+## 1.0.2
+Documentation updated

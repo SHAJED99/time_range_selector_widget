@@ -141,4 +141,3 @@ childBuilder: (currentTime) {
 ## Easily Customizable
 
 ![Easily Customizable](https://raw.githubusercontent.com/SHAJED99/time_range_selector_widget/main/screenshots/5.gif)
-```
