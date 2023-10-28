@@ -10,19 +10,6 @@ To use the `TimeRangeSelectorWidget` widget in your project, follow these steps:
 
    ```dart
    TimeRangeSelectorWidget(
-       initialTime: 2,
-       maxTime: 10,
-       stockColor: Colors.green,
-       shadowColorLight: Colors.white.withOpacity(0.5),
-       shadowColorDark: Theme.of(context).shadowColor.withOpacity(0.5),
-       colorGradient: const [
-           Color(0xFFF5F5F9),
-           Color(0xFFE4E8EE),
-       ],
-       backgroundColor: const [
-           Color(0xFFF5F5F9),
-           Color(0xFFE4E8EE),
-       ],
        onChangeValue: (currentTime) {
            // TODO: Add your callback function here
        },
