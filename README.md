@@ -2,6 +2,9 @@
 
 Easily select a time range.
 
+### NOTE
+Now Material 3 theme is enabled.
+
 ## Getting Started
 
 To use the `TimeRangeSelectorWidget` widget in your project, follow these steps:

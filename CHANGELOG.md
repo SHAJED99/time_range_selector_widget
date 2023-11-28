@@ -23,3 +23,7 @@ Documentation updated
 
 ## 1.0.3
 Documentation updated
+
+## 2.0.0
+Material 3 is integrated.
+Fixed height problem.

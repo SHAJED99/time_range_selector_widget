@@ -5,37 +5,37 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
 class TimeRangeSelectorWidget extends StatefulWidget {
   const TimeRangeSelectorWidget({
-    super.key,
+    Key? key,
     this.initialTime = 0,
     this.minTime = 0,
     this.maxTime = 12,
-    this.handlePadding = 12,
-    this.stockWidth = 24 * 2,
-    this.depth = 3,
+    this.handlePadding,
+    this.stockWidth,
+    this.depth = 2,
     this.stockColor,
     this.backgroundColor,
     this.shadowColorDark,
     this.shadowColorLight,
     this.childBuilder,
     this.positionalDotBuilder,
-    this.positionalDotSize = 8,
-    this.positionalDotColor = Colors.black,
+    this.positionalDotSize,
+    this.positionalDotColor,
     this.handleColor,
     this.handleBuilder,
     this.onChangeValue,
-  });
+  }) : super(key: key);
 
   /// A builder function to provide custom child widgets based on the selected time.
   final Widget Function(int currentTime)? childBuilder;
 
   /// A builder function to provide custom dots at specific positions.
-  final Function(int itemIndex, Offset offset)? positionalDotBuilder;
+  final Widget? Function(int itemIndex, Offset offset)? positionalDotBuilder;
 
   /// A builder function to provide custom dots at handle positions.
-  final Function(int itemIndex, Offset offset)? handleBuilder;
+  final Widget? Function(int itemIndex, Offset offset)? handleBuilder;
 
   /// A callback function called when the selected time changes.
-  final Function(int currentTime)? onChangeValue;
+  final void Function(int currentTime)? onChangeValue;
 
   /// Canvas background color
   final Color? backgroundColor;
@@ -44,10 +44,12 @@ class TimeRangeSelectorWidget extends StatefulWidget {
   final double depth;
 
   /// Handle point color
+  /// Default: Theme.of(context).colorScheme.background
   final Color? handleColor;
 
   /// Handle point padding from Stock
-  final double handlePadding;
+  /// Default: Theme.of(context).buttonTheme.height / 3
+  final double? handlePadding;
 
   /// The initial time value of the selector.
   final int initialTime;
@@ -59,22 +61,28 @@ class TimeRangeSelectorWidget extends StatefulWidget {
   final int minTime;
 
   /// Positional dots color.
-  final Color positionalDotColor;
+  /// Theme.of(context).colorScheme.onBackground
+  /// Theme.of(context).colorScheme.onPrimary
+  final Color? positionalDotColor;
 
   /// Positional dots size.
-  final double positionalDotSize;
+  /// Default: Theme.of(context).buttonTheme.height / 8
+  final double? positionalDotSize;
 
   /// Depth shadow Color
   final Color? shadowColorDark;
 
   /// Depth shadow Color
+  /// Default: blendColors(baseColor: Colors.transparent, blendColor: Colors.white, blendMode: BlendModeType.screen).withOpacity(0.7)
   final Color? shadowColorLight;
 
   /// Stock / Progress bar color
+  /// Theme.of(context).colorScheme.primary
   final Color? stockColor;
 
   /// Stock / Progress bar width
-  final double stockWidth;
+  /// Default: Theme.of(context).buttonTheme.height
+  final double? stockWidth;
 
   @override
   State<TimeRangeSelectorWidget> createState() =>
@@ -83,6 +91,9 @@ class TimeRangeSelectorWidget extends StatefulWidget {
 
 class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
   late int currentPosition;
+  late double handlePadding;
+  late double positionalDotSize;
+  late double stockWidth;
   late int totalPosition;
 
   @override
@@ -93,6 +104,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
         widget.initialTime > widget.maxTime) {
       throw Exception("Current time must be in time range (Max and min time)");
     }
+
     currentPosition = widget.initialTime - widget.minTime;
 
     if (widget.maxTime <= widget.minTime) {
@@ -101,26 +113,48 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     totalPosition = widget.maxTime - widget.minTime + 1;
   }
 
-  Widget drawBox(
-      {required BuildContext context, Widget? child, bool? isHandle}) {
+  setValue() {
+    stockWidth = widget.stockWidth ?? Theme.of(context).buttonTheme.height;
+    handlePadding =
+        widget.handlePadding ?? Theme.of(context).buttonTheme.height / 3;
+    positionalDotSize =
+        widget.positionalDotSize ?? Theme.of(context).buttonTheme.height / 8;
+  }
+
+  Widget drawBox({Widget? child, bool? isHandle, int? index}) {
     double s = isHandle != null ? widget.depth / 2 : widget.depth;
+
+    Color? dotColor;
+
+    if (widget.positionalDotColor != null) {
+      dotColor = widget.positionalDotColor!;
+    } else if (index != null) {
+      dotColor = currentPosition < index
+          ? Theme.of(context).colorScheme.onBackground
+          : Theme.of(context).colorScheme.onPrimary;
+    }
+
     return Container(
       clipBehavior: Clip.antiAlias,
       alignment: Alignment.center,
-      margin: child == null ? null : EdgeInsets.all(widget.stockWidth),
+      margin: child == null ? null : EdgeInsets.all(stockWidth),
       decoration: BoxDecoration(
         color: isHandle != null
             ? isHandle
-                ? widget.handleColor ?? Theme.of(context).canvasColor
-                : widget.positionalDotColor
+                ? widget.handleColor ?? Theme.of(context).colorScheme.background
+                : dotColor
             : child == null
                 ? null
-                : Theme.of(context).canvasColor,
+                : Theme.of(context).colorScheme.background,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
             color: widget.shadowColorLight ??
-                Theme.of(context).cardColor.withOpacity(0.5),
+                blendColors(
+                        baseColor: Colors.transparent,
+                        blendColor: Colors.white,
+                        blendMode: BlendModeType.screen)
+                    .withOpacity(0.5),
             blurRadius: s,
             offset: Offset(-s, -s),
             inset: isHandle != null
@@ -130,7 +164,11 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
           ),
           BoxShadow(
             color: widget.shadowColorDark ??
-                Theme.of(context).shadowColor.withOpacity(0.5),
+                blendColors(
+                        baseColor: Colors.transparent,
+                        blendColor: Colors.black,
+                        blendMode: BlendModeType.multiply)
+                    .withOpacity(0.5),
             blurRadius: s,
             offset: Offset(s, s),
             inset: isHandle != null
@@ -158,31 +196,31 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     if (isHandle) {
       if (widget.handleBuilder == null) {
         w = Padding(
-          padding: EdgeInsets.all(widget.handlePadding / 2),
-          child: drawBox(context: context, isHandle: true),
+          padding: EdgeInsets.all(handlePadding / 2),
+          child: drawBox(isHandle: true),
         );
       } else {
-        w = widget.handleBuilder!(index, offset);
+        w = widget.handleBuilder!(index, offset) ?? const SizedBox();
       }
     } else {
       if (widget.positionalDotBuilder == null) {
         w = SizedBox(
-          width: widget.positionalDotSize,
-          height: widget.positionalDotSize,
-          child: drawBox(context: context, isHandle: false),
+          width: positionalDotSize,
+          height: positionalDotSize,
+          child: drawBox(isHandle: false, index: index),
         );
       } else {
-        w = widget.positionalDotBuilder!(index, offset);
+        w = widget.positionalDotBuilder!(index, offset) ?? const SizedBox();
       }
     }
 
     return Positioned(
-      left: offset.dx - (widget.stockWidth / 2),
-      top: offset.dy - (widget.stockWidth / 2),
+      left: offset.dx - (stockWidth / 2),
+      top: offset.dy - (stockWidth / 2),
       child: Container(
         alignment: Alignment.center,
-        width: widget.stockWidth,
-        height: widget.stockWidth,
+        width: stockWidth,
+        height: stockWidth,
         child: w,
       ),
     );
@@ -194,8 +232,9 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
     if (i >= totalPosition) i = 0;
     if (currentPosition != i) {
       if (mounted) setState(() => currentPosition = i);
-      if (widget.onChangeValue != null)
+      if (widget.onChangeValue != null) {
         widget.onChangeValue!(i + widget.minTime);
+      }
     }
   }
 
@@ -214,14 +253,15 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
 
   @override
   Widget build(BuildContext context) {
+    setValue();
     return AspectRatio(
       aspectRatio: 1,
       child: LayoutBuilder(
         builder: (context, box) {
           double centerX = box.maxWidth / 2;
           double centerY = box.maxHeight / 2;
-          final radius = min((box.maxHeight / 2) - (widget.stockWidth / 2),
-              (box.maxWidth / 2) - (widget.stockWidth / 2));
+          final radius = min((box.maxHeight / 2) - (stockWidth / 2),
+              (box.maxWidth / 2) - (stockWidth / 2));
 
           return Container(
             clipBehavior: Clip.antiAlias,
@@ -234,31 +274,17 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
                 Positioned.fill(
                   child: CustomPaint(
                     painter: _CustomClockPickerPaint(
-                      stockColor:
-                          widget.stockColor ?? Theme.of(context).primaryColor,
-                      stokeWidth: widget.stockWidth,
+                      stockColor: widget.stockColor ??
+                          Theme.of(context).colorScheme.primary,
+                      stokeWidth: stockWidth,
                       time: currentPosition,
                       totalTime: totalPosition,
-                      positionalDotSize: widget.positionalDotSize,
-                      positionalDotColor: widget.positionalDotColor,
                     ),
                   ),
                 ),
 
                 /// -------------------------------------------------------------------------------------- Back Canvas
-                Positioned.fill(child: drawBox(context: context)),
-
-                /// -------------------------------------------------------------------------------------- Front Canvas
-                drawBox(
-                  context: context,
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: widget.childBuilder == null
-                        ? const SizedBox()
-                        : widget
-                            .childBuilder!(currentPosition + widget.minTime),
-                  ),
-                ),
+                Positioned.fill(child: drawBox()),
 
                 /// --------------------------------------------------------------------------------------- Small Dots
                 for (int i = 0; i < totalPosition; i++)
@@ -273,7 +299,6 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
                     onPanUpdate: (details) {
                       double angle = angleCounter(
                           Size(box.maxWidth, box.maxHeight), details);
-                      // print(angle);
                       changeTime(angle);
                     },
                     child: Container(
@@ -288,11 +313,22 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
                 //! Blocking Touch
                 Positioned.fill(
                   child: Container(
-                    margin: EdgeInsets.all(widget.stockWidth),
+                    margin: EdgeInsets.all(stockWidth),
                     decoration: const BoxDecoration(
                       color: Colors.transparent,
                       shape: BoxShape.circle,
                     ),
+                  ),
+                ),
+
+                /// -------------------------------------------------------------------------------------- Front Canvas
+                drawBox(
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: widget.childBuilder == null
+                        ? const SizedBox()
+                        : widget
+                            .childBuilder!(currentPosition + widget.minTime),
                   ),
                 ),
               ],
@@ -310,12 +346,8 @@ class _CustomClockPickerPaint extends CustomPainter {
     required this.stokeWidth,
     required this.time,
     required this.totalTime,
-    required this.positionalDotSize,
-    required this.positionalDotColor,
   });
 
-  final Color positionalDotColor;
-  final double positionalDotSize;
   final Color stockColor;
   final double stokeWidth;
   final int time;
@@ -357,4 +389,53 @@ Offset _countOffset(
   double y = centerY +
       radius * sin((270 + (360 * currentPosition / totalPosition)) * pi / 180);
   return Offset(x, y);
+}
+
+//! ------------------------------------------------------------------------------------------------ Colors
+Color blendColors(
+    {required Color baseColor,
+    required Color blendColor,
+    required BlendModeType blendMode}) {
+  double normalize(int value) => value / 255.0;
+
+  int clamp(double value) => value.clamp(0, 255).toInt();
+
+  switch (blendMode) {
+    case BlendModeType.normal:
+      return baseColor;
+
+    case BlendModeType.multiply:
+      return Color.fromARGB(
+        baseColor.alpha,
+        clamp(normalize(baseColor.red) * normalize(blendColor.red) * 255),
+        clamp(normalize(baseColor.green) * normalize(blendColor.green) * 255),
+        clamp(normalize(baseColor.blue) * normalize(blendColor.blue) * 255),
+      );
+
+    case BlendModeType.screen:
+      return Color.fromARGB(
+        baseColor.alpha,
+        clamp((1 -
+                (1 - normalize(baseColor.red)) *
+                    (1 - normalize(blendColor.red))) *
+            255),
+        clamp((1 -
+                (1 - normalize(baseColor.green)) *
+                    (1 - normalize(blendColor.green))) *
+            255),
+        clamp((1 -
+                (1 - normalize(baseColor.blue)) *
+                    (1 - normalize(blendColor.blue))) *
+            255),
+      );
+
+    default:
+      return baseColor;
+  }
+}
+
+enum BlendModeType {
+  normal,
+  multiply,
+  screen,
 }
