@@ -76,23 +76,27 @@ class _MyAppState extends State<MyApp> {
                   maxTime: maxTime,
                   minTime: minTime,
                   onChangeValue: (i) {},
-                  // positionalDotBuilder: (i, __) => Text(
-                  //   i.toString(),
-                  //   style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
-                  // ),
-                  // handleBuilder: (i, _) {
-                  //   // return null;
-                  //   return Container(
-                  //     alignment: Alignment.center,
-                  //     height: 24 * 1.5,
-                  //     width: 24 * 1.5,
-                  //     decoration: BoxDecoration(
-                  //       color: Theme.of(context).colorScheme.background,
-                  //       shape: BoxShape.circle,
-                  //     ),
-                  //     child: Text(i.toString()),
-                  //   );
-                  // },
+                  positionalDotBuilder: (i, __) {
+                    // return Text(
+                    //   i.toString(),
+                    //   style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                    // );
+
+                    return null;
+                  },
+                  handleBuilder: (i, _) {
+                    // return null;
+                    return Container(
+                      alignment: Alignment.center,
+                      height: 24 * 1.5,
+                      width: 24 * 1.5,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.background,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(i.toString()),
+                    );
+                  },
                   childBuilder: (i) {
                     debugPrint(i.toString());
                     return Container(

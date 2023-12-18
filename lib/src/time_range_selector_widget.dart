@@ -203,14 +203,19 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
         w = widget.handleBuilder!(index, offset) ?? const SizedBox();
       }
     } else {
-      if (widget.positionalDotBuilder == null) {
-        w = SizedBox(
-          width: positionalDotSize,
-          height: positionalDotSize,
-          child: drawBox(isHandle: false, index: index),
-        );
-      } else {
-        w = widget.positionalDotBuilder!(index, offset) ?? const SizedBox();
+      w = SizedBox(
+        width: positionalDotSize,
+        height: positionalDotSize,
+        child: drawBox(isHandle: false, index: index),
+      );
+      // if (widget.positionalDotBuilder == null) {
+      // } else {
+      //   w = (widget.positionalDotBuilder!(index, offset)) ?? const SizedBox();
+      // }
+
+      if (widget.positionalDotBuilder != null &&
+          widget.positionalDotBuilder!(index, offset) != null) {
+        w = widget.positionalDotBuilder!(index, offset)!;
       }
     }
 
@@ -239,11 +244,11 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
   }
 
   /// Calculates the angle of a point relative to the center of the clock selector.
-  double angleCounter(Size size, DragUpdateDetails details) {
+  double angleCounter(Size size, Offset localPosition) {
     final centerX = size.width / 2;
     final centerY = size.height / 2;
-    final double dx = details.localPosition.dx - centerX;
-    final double dy = details.localPosition.dy - centerY;
+    final double dx = localPosition.dx - centerX;
+    final double dy = localPosition.dy - centerY;
 
     double angle = atan2(dy, dx);
     angle = 90 + (angle * 180 / pi);
@@ -296,9 +301,16 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
                 /// --------------------------------------------------------------------------------------- Draggable
                 Positioned.fill(
                   child: GestureDetector(
+                    onPanDown: (details) {
+                      double angle = angleCounter(
+                          Size(box.maxWidth, box.maxHeight),
+                          details.localPosition);
+                      changeTime(angle);
+                    },
                     onPanUpdate: (details) {
                       double angle = angleCounter(
-                          Size(box.maxWidth, box.maxHeight), details);
+                          Size(box.maxWidth, box.maxHeight),
+                          details.localPosition);
                       changeTime(angle);
                     },
                     child: Container(

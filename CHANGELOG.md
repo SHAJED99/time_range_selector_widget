@@ -27,3 +27,6 @@ Documentation updated
 ## 2.0.0
 Material 3 is integrated.
 Fixed height problem.
+
+## 2.0.1
+Gesture response error fixed
