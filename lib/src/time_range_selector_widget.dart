@@ -61,7 +61,7 @@ class TimeRangeSelectorWidget extends StatefulWidget {
   final int minTime;
 
   /// Positional dots color.
-  /// Theme.of(context).colorScheme.onBackground
+  /// Theme.of(context).colorScheme.onSurface
   /// Theme.of(context).colorScheme.onPrimary
   final Color? positionalDotColor;
 
@@ -130,7 +130,7 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
       dotColor = widget.positionalDotColor!;
     } else if (index != null) {
       dotColor = currentPosition < index
-          ? Theme.of(context).colorScheme.onBackground
+          ? Theme.of(context).colorScheme.onSurface
           : Theme.of(context).colorScheme.onPrimary;
     }
 
@@ -141,11 +141,11 @@ class _TimeRangeSelectorWidgetState extends State<TimeRangeSelectorWidget> {
       decoration: BoxDecoration(
         color: isHandle != null
             ? isHandle
-                ? widget.handleColor ?? Theme.of(context).colorScheme.background
+                ? widget.handleColor ?? Theme.of(context).colorScheme.surface
                 : dotColor
             : child == null
                 ? null
-                : Theme.of(context).colorScheme.background,
+                : Theme.of(context).colorScheme.surface,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(

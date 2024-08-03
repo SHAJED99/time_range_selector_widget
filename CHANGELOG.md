@@ -30,3 +30,6 @@ Fixed height problem.
 
 ## 2.0.1
 Gesture response error fixed
+
+## 2.0.2
+Deprecated properties fixed

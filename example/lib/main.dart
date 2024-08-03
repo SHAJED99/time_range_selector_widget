@@ -59,14 +59,8 @@ class _MyAppState extends State<MyApp> {
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withOpacity(0.05),
-                      Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withOpacity(0.1)
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.1)
                     ],
                   ),
                 ),
@@ -91,7 +85,7 @@ class _MyAppState extends State<MyApp> {
                       height: 24 * 1.5,
                       width: 24 * 1.5,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                         shape: BoxShape.circle,
                       ),
                       child: Text(i.toString()),
@@ -105,11 +99,11 @@ class _MyAppState extends State<MyApp> {
                           colors: [
                             Theme.of(context)
                                 .colorScheme
-                                .onBackground
+                                .onSurface
                                 .withOpacity(0.05),
                             Theme.of(context)
                                 .colorScheme
-                                .onBackground
+                                .onSurface
                                 .withOpacity(0.1)
                           ],
                         ),
@@ -135,11 +129,11 @@ class _MyAppState extends State<MyApp> {
                                 colors: [
                                   Theme.of(context)
                                       .colorScheme
-                                      .onBackground
+                                      .onSurface
                                       .withOpacity(0.05),
                                   Theme.of(context)
                                       .colorScheme
-                                      .onBackground
+                                      .onSurface
                                       .withOpacity(0.1)
                                 ],
                               ),
@@ -164,11 +158,11 @@ class _MyAppState extends State<MyApp> {
                                 colors: [
                                   Theme.of(context)
                                       .colorScheme
-                                      .onBackground
+                                      .onSurface
                                       .withOpacity(0.05),
                                   Theme.of(context)
                                       .colorScheme
-                                      .onBackground
+                                      .onSurface
                                       .withOpacity(0.1)
                                 ],
                               ),
