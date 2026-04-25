@@ -1,3 +1,8 @@
+[![Pub Version](https://img.shields.io/pub/v/time_range_selector_widget?style=flat-square)](https://pub.dev/packages/time_range_selector_widget)
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?style=flat-square)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.x-blue?style=flat-square)](https://dart.dev)
+[![License](https://img.shields.io/badge/License-BSD--3-blue?style=flat-square)](LICENSE)
+
 # Time Range Selector Widget
 
 Easily select a time range.
